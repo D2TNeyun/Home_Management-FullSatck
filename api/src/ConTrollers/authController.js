@@ -1,0 +1,97 @@
+
+import { avatar, email, id_Department, password, position, username } from "../Helper/joi_schema";
+import { badRequest, internalServerError, notFound } from "../Middleware/handle_err";
+import * as Service from "../Services";
+import joi from "joi";
+const cloudinary = require('cloudinary').v2;
+
+// Controller Staff
+export const registerStaff = async (req, res, next) => {
+    try {
+        const { usernameStaff, emailStaff, position, passwordStaff } = req.body;
+        const role = "AD";
+        console.log("Data", req.body);
+
+        const data = await Service.registerServiceStaff({ usernameStaff, emailStaff, position, passwordStaff, role });
+        console.log(data);
+        return res.json(data);
+    }
+    catch (e) {
+        console.error(e);
+        if (e) {
+            return res.status(400).json({ error: e });
+        }
+        return res.status(500).json({ error: "Internal Server Error" });
+        // return internalServerError(res);
+    }
+
+}
+
+export const loginStaff = async (req, res) => {
+    try {
+        // code
+        const { email, password } = req.body;
+        console.log("Data", req.body)
+        let data = await Service.loginServiceStaff({ email, password });
+        console.log(data);
+        return res.json(data);
+    } catch (e) {
+        console.error(e);
+        if (e) {
+            return res.status(400).json({ error: e });
+        }
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+//Controller User
+export const register = async (req, res) => {
+    try {
+        const fileData = req.file 
+        console.log(fileData)
+        const { error } = joi.object({ email, password, avatar }).validate({...req.body, avatar: fileData?.path})
+        if (error) {
+            if(fileData) cloudinary.uploader.destroy(fileData.filename)
+            return badRequest(error.details[0]?.message, res);
+        }
+        const response = await Service.registerService({...req.body, fileData})
+        return res.json(response);
+    } catch (e) {
+        console.error(e);
+        if (e) {
+            return notFound();
+        }
+        return internalServerError(res);
+    }
+}
+
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        console.log("Data", req.body)
+        let data = await Service.loginService({ email, password });
+        console.log(data);
+        return res.json(data);
+    } catch (e) {
+        console.error(e);
+        if (e) {
+            return res.status(400).json({ error: e });
+        }
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
+export const logout = async (req, res) => {
+    try {
+        res.cookie("token", "");
+        return res
+            .status(200)
+            .json({ success: true, message: "Logout successful" });
+    } catch (e) {
+        console.error(e);
+        if (e) {
+            return res.status(400).json({ error: e });
+        }
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+

@@ -1,0 +1,34 @@
+
+POST http://localhost:3037/register
+Content-Type: application/json
+
+{
+    "email": "test1@gmail.com",
+    "password": "1231213"
+   
+} 
+
+###
+POST http://localhost:3037/login
+Content-Type: application/json
+
+{
+    "email": "test1@gmail.com",
+    "password": "1231213"
+   
+} 
+
+###
+GET http://localhost:3037/admin/getOne
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQUQiLCJpZCI6NCwidXNlcm5hbWUiOiJ0ZXN0IiwicG9zaXRpb24iOiJhc2MiLCJlbWFpbCI6InRlc3Q0IiwiaWF0IjoxNzE2OTY3NDc0LCJleHAiOjE3MTY5NjkyNzR9.KyBIlFvG4tpvz-bHZgY0yniW8EZUyj9L_0cmW8kZFpY
+
+
+###
+GET http://localhost:3037/dtnk/getAll?name=topic
+###
+PUT http://localhost:3037/dpm/updateDpm/3
+Content-Type: application/json
+
+{
+    "nameDepartment": "Mang May Tinh update"
+}
