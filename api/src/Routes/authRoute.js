@@ -4,7 +4,7 @@ import uploadCloud from "../Middleware/uploadClound";
 import express from "express";
 const router = express.Router();
 
-
+router.get('/getProfile', ConTrollers.getProfile);
 router.post('/staff/register', ConTrollers.registerStaff);
 router.post('/staff/login', ConTrollers.loginStaff);
 router.post('/register', uploadCloud.single('avatar'), ConTrollers.register);

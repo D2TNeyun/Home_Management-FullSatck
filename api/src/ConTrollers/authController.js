@@ -5,6 +5,26 @@ import * as Service from "../Services";
 import joi from "joi";
 const cloudinary = require('cloudinary').v2;
 
+
+export const getProfile = (req, res) => {
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            return res.json("Nguoi dung ch dang nhap");
+        }
+        const user = jwt.verify(token, 'access_token');
+        return res.json(user);
+    } catch (error) {
+        if(err instanceof jwt.TokenExpiredError) {
+            // Token đã hết hạn, thông báo cho người dùng
+            return res.status(401).json({ message: 'Token has expired' });
+        } else {
+            // Xử lý các lỗi khác
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    }
+}
+
 // Controller Staff
 export const registerStaff = async (req, res, next) => {
     try {
