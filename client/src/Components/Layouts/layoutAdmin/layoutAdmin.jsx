@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./layoutAdmin.module.scss";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import {
-  Dropdown,
-  Button,
-} from "antd";
+import { Dropdown, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-
 import AuthService from "../../../Services/AuthService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +15,7 @@ import {
   UserOutlined,
   ProjectOutlined,
   TrophyOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons"; //icon dashboards side menu
 import { Layout, Menu, theme } from "antd";
 
@@ -44,7 +43,8 @@ const itemsSlider = [
           marginBottom: "10px",
         }}
       >
-        ITC Group
+        {" "}
+        ITC Group{" "}
       </p>
     </Link>,
     "0",
@@ -60,6 +60,7 @@ const itemsSlider = [
   ),
   getItem(
     <Link to="/admin" className="text-decoration-none">
+      {" "}
       Dashboard
     </Link>,
     "1",
@@ -68,35 +69,40 @@ const itemsSlider = [
   ),
   getItem("User", "Sub1", <UserOutlined />, [
     getItem(
-      <Link to="/admin/user" className="text-decoration-none">
+      <Link to="/admin/manageUser" className="text-decoration-none">
+        {" "}
         Danh Sach Can bo
       </Link>,
       "2"
     ),
     getItem(
-      <Link to="/admin/staff" className="text-decoration-none">
+      <Link to="/admin/manageStaff" className="text-decoration-none">
+        {" "}
         Danh Sach Nhan vien
       </Link>,
       "3"
     ),
   ]),
+
   getItem("Project", "Sub2", <ProjectOutlined />, [
     getItem(
       <Link to="/admin/dtnk" className="text-decoration-none">
+        {" "}
         Danh Sach
       </Link>,
       "4"
     ),
   ]),
+
   getItem("Trophy", "Sub3", <TrophyOutlined />, [
     getItem(
       <Link to="/admin/award" className="text-decoration-none">
+        {" "}
         Danh Sach
       </Link>,
       "5"
     ),
   ]),
-
 ];
 
 const layoutAdmin = () => {
@@ -119,7 +125,11 @@ const layoutAdmin = () => {
 
   const items = [
     {
-      label: <p className="m-0">Đăng xuất</p>,
+      label: (
+        <p className="m-0">
+          <LogoutOutlined /> Đăng xuất
+        </p>
+      ),
       key: "0",
       onClick: handleLogout,
     },
@@ -135,7 +145,6 @@ const layoutAdmin = () => {
         }}
       >
         <Sider
-        
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
@@ -165,9 +174,24 @@ const layoutAdmin = () => {
               </Dropdown>
             </div>
           </Header>
-          <Content style={{ backgroundColor: "#F0F3F7" }}>
+          <Content style={{ backgroundColor: "#F0F3F" }}>
             <div>
               <Outlet />
+              <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                transition={["fade", "scale"]}
+              />
+              {/* Same as */}
+              <ToastContainer />
             </div>
           </Content>
         </Layout>
