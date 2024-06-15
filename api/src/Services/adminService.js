@@ -38,7 +38,7 @@ export const getAllUserService = ({ name, ...query }) => new Promise(async (reso
         resolve({
             err: response ? 0 : 1,
             mes: response ? "Got" : "User not found",
-            Data: response
+            DT: response
         })
     } catch (error) {
         reject(error);

@@ -11,6 +11,11 @@ const postCreateNewUser = (email, password, avatar) =>{
     return axios.post('/register', data)
 }
 
+const getAllUser = () => {
+    return axios.get('/admin/getAllUser');
+}
+
 export {
     postCreateNewUser,
+    getAllUser,
 };

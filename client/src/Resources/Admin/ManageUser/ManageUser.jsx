@@ -1,13 +1,32 @@
 import classNames from "classnames/bind";
 import styles from "./ManageUser.module.scss";
 import ModalCreateUser from "./ModalCreateUser";
-
+import React, { useState, useEffect } from "react";
 import { UserAddOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import TableUser from "./GetAllUser";
+import { getAllUser } from "../../../Services/apiService";
 
 const cx = classNames.bind(styles);
 const ManageUser = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
+  const [listUser, setListUser] = useState([]);
+
+  const fetchUserList = async () => {
+    try {
+      let res = await getAllUser();
+      console.log(res); // Kiểm tra giá trị trả về của getAllUser
+      if (res.err === 0) {
+        setListUser(res.DT.rows);
+      }
+    } catch (error) {
+      console.error("Failed to fetch user list:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserList();
+  }, []);
+
   return (
     <>
       <div className={cx("manageUser-container")}>
@@ -16,12 +35,19 @@ const ManageUser = (props) => {
           <div className={cx("allBtn-manageUser")}>
             <button
               className={cx("btn-addUser")}
-              onClick={() => setShowModalCreateUser(true)}>
+              onClick={() => setShowModalCreateUser(true)}
+            >
               <UserAddOutlined /> Add User
             </button>
           </div>
-          <div className={cx("table-user")}>table user</div>
-          <ModalCreateUser show={showModalCreateUser} setShow={setShowModalCreateUser}/>
+          <div className={cx("table-user")}>
+            <TableUser listUser={listUser}/>
+          </div>
+          <ModalCreateUser
+            show={showModalCreateUser}
+            setShow={setShowModalCreateUser}
+            fetchUserList={fetchUserList}
+          />
         </div>
       </div>
     </>

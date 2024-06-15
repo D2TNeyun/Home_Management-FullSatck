@@ -1,14 +1,15 @@
 //ManageUser 
-.manageUser-container{
+.manageUser-container {
     padding: 10px;
 
-    .tille{
+    .tille {
         font-weight: 600;
         font-size: 20px;
     }
-    .users-content{
-        .allBtn-manageUser{
-            .btn-addUser{
+
+    .users-content {
+        .allBtn-manageUser {
+            .btn-addUser {
                 background-image: linear-gradient(to right, #1c98f8 0%, #4bc3d5 51%, #469fda 100%);
                 margin: 15px 0;
                 padding: 3px 5px;
@@ -20,7 +21,7 @@
                 border: none;
                 font-size: 15px;
                 font-weight: 500;
-                
+
                 &:hover {
                     background-position: right center;
                     color: #263a58;
@@ -29,9 +30,8 @@
                 }
             }
         }
-        .table-user{
 
-        }
+        .table-user {}
     }
 }
 
@@ -51,8 +51,9 @@
             max-height: 100%;
         }
     }
-    .upload-avatar{
-        .label-upload{
+
+    .upload-avatar {
+        .label-upload {
             display: flex;
             align-items: center;
             gap: 5px;
@@ -64,10 +65,88 @@
             border: none;
             cursor: pointer;
 
-            &:hover{
+            &:hover {
                 background-color: #dcdcdc;
             }
         }
-    
+
+    }
+}
+
+//Table ListUser
+.tbody{
+    font-size: 17px;
+}
+.btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border: none;
+    cursor: pointer;
+    padding: 10px 10px;
+
+    .btn-view {
+        background-image: linear-gradient(to right, #1c98f8 0%, #4bc3d5 51%, #469fda 100%);
+        padding: 3px 5px;
+        text-align: center;
+        justify-content: center;
+        background-size: 200% auto;
+        color: white;
+        border-radius: 10px;
+        display: flex;
+        border: none;
+        font-size: 23px;
+
+        &:hover {
+            background-position: right center;
+            color: #04070c;
+            text-decoration: none;
+            box-shadow: 0 12px 16px 0 rgba(98, 87, 87, 0.24), 0 17px 50px 0 rgba(68, 56, 56, 0.19);
+        }
+
+    }
+
+    .btn-Edit {
+        background-image: linear-gradient(to right, #cff33e 0%, #8db756 51%, #464e2d 100%);
+        padding: 3px 5px;
+        text-align: center;
+        justify-content: center;
+        background-size: 200% auto;
+        color: white;
+        border-radius: 10px;
+        display: flex;
+        border: none;
+        font-size: 23px;
+        font-weight: 500;
+
+        &:hover {
+            background-position: right center;
+            color: #04070c;
+            text-decoration: none;
+            box-shadow: 0 12px 16px 0 rgba(98, 87, 87, 0.24), 0 17px 50px 0 rgba(68, 56, 56, 0.19);
+        }
+    }
+
+    .btn-Delete {
+        background-image: linear-gradient(to right, #f21111 0%, #974452 51%, #e34545 100%);
+        padding: 3px 5px;
+        text-align: center;
+        justify-content: center;
+        background-size: 200% auto;
+        color: white;
+        border-radius: 10px;
+        display: flex;
+        border: none;
+        font-size: 23px;
+        font-weight: 500;
+
+        &:hover {
+            background-position: right center;
+            color: #04070c;
+            text-decoration: none;
+            box-shadow: 0 12px 16px 0 rgba(98, 87, 87, 0.24), 0 17px 50px 0 rgba(68, 56, 56, 0.19);
+        }
+
     }
 }

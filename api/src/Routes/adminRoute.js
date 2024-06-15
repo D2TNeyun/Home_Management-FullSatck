@@ -7,8 +7,8 @@ import uploadCloud from "../Middleware/uploadClound";
 const router = express.Router();
 
 // //private route
-router.use(verifyToken);
-router.use(isAdmin);
+// router.use(verifyToken);
+// router.use(isAdmin);
 router.get('/getProfile', ConTrollers.getCurrent);
 router.get('/getAllUser', ConTrollers.getAllUser);
 router.delete('/deleteStaff/:id', ConTrollers.deleteStaffController);
