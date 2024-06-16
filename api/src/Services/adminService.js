@@ -45,11 +45,11 @@ export const getAllUserService = ({ name, ...query }) => new Promise(async (reso
     }
 })
 
-export const updateProfilService = ({ id, username, email, avatar, position }) => new Promise(async (resolve, reject) => {
+export const updateProfilService = ({ id, username, avatar, position, id_Department }) => new Promise(async (resolve, reject) => {
     try {
         let existName = await db.User.findOne({ where: { id } });
         if (existName) {
-            let updateFields = { username, email, position }// Update the correct field name
+            let updateFields = { username, position, id_Department }// Update the correct field name
             if (avatar) {
                 // Upload the image to Cloudinary
                 const result = await cloudinary.uploader.upload(avatar.path);

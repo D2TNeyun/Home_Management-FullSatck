@@ -31,9 +31,9 @@ export const updateUserController = async (req, res) => {
     try {
         const avatar = req.file;
         const id = req.params.id;
-        const { username, email, position } = req.body; // Ensure this is a string
+        const { username, position, id_Department } = req.body; // Ensure this is a string
 
-        let data = await Service.updateProfilService({ id, username, email, position, avatar });
+        let data = await Service.updateProfilService({ id, id_Department, username, position, avatar });
         if(!data){
             if(avatar) cloudinary.uploader.destroy(avatar.filename)
         }

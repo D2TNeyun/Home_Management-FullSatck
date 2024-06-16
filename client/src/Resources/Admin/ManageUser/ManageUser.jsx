@@ -5,10 +5,14 @@ import React, { useState, useEffect } from "react";
 import { UserAddOutlined } from "@ant-design/icons";
 import TableUser from "./GetAllUser";
 import { getAllUser } from "../../../Services/apiService";
+import ModalUpdateUser from "./ModalUpdateUser";
 
 const cx = classNames.bind(styles);
 const ManageUser = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
+  const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
+  const [dataUpdateUser, setDataUpdateUser] = useState({});
+
   const [listUser, setListUser] = useState([]);
 
   const fetchUserList = async () => {
@@ -23,9 +27,15 @@ const ManageUser = (props) => {
     }
   };
 
+
   useEffect(() => {
     fetchUserList();
   }, []);
+
+  const handleClickBtnUpdate = (user) => {
+    setShowModalUpdateUser(true);
+    setDataUpdateUser(user);
+  };
 
   return (
     <>
@@ -41,11 +51,20 @@ const ManageUser = (props) => {
             </button>
           </div>
           <div className={cx("table-user")}>
-            <TableUser listUser={listUser}/>
+            <TableUser
+              listUser={listUser}
+              handleClickBtnUpdate={handleClickBtnUpdate}
+            />
           </div>
           <ModalCreateUser
             show={showModalCreateUser}
             setShow={setShowModalCreateUser}
+            fetchUserList={fetchUserList}
+          />
+          <ModalUpdateUser
+            show={showModalUpdateUser}
+            setShow={setShowModalUpdateUser}
+            dataUpdateUser={dataUpdateUser}
             fetchUserList={fetchUserList}
           />
         </div>
