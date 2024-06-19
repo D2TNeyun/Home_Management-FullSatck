@@ -1,0 +1,58 @@
+<div className={cx("Detail-Container")}>
+            <div className={cx("Detail-avatar")}>
+              <div className={cx("img-preview")}>
+                {preview ? (
+                  <img className={cx("preview")} src={preview} />
+                ) : (
+                  <span className={cx("preview")}>Preview Avatar</span>
+                )}
+              </div>
+            </div>
+            <div className={cx("row Detail-content")}>
+              <div className="col-md-6">
+                <label className="form-label">Username:</label>
+                <input
+                  type="Username"
+                  className="form-control"
+                  value={username}
+                  disabled
+                />
+              </div>
+              <div className="col-md-6">
+                <label className="form-label">Email:</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  value={email}
+                  disabled
+                />
+              </div>
+              <div className="col-md-6">
+                <label className="form-label">Position:</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  value={position}
+                  disabled
+                />
+              </div>
+              <div className="col-md-6">
+                  <label className="form-label">Department:</label>
+                  <select
+                    className="form-select"
+                    value={id_Department}
+                    disabled
+                  >
+                    {departments && departments.length > 0 ? (
+                      departments.map((item, index) => (
+                        <option key={index} value={item.id}>
+                          {item.nameDepartment}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="">No departments available</option>
+                    )}
+                  </select>
+                </div>
+            </div>
+          </div>

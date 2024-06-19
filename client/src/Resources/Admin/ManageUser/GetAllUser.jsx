@@ -4,11 +4,34 @@ import styles from "./ManageUser.module.scss";
 import { GrFormView } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-
+import { getUser } from "../../../Services/apiService";
+import ModalViewUser from "./ModalViewUser";
 const cx = classNames.bind(styles);
 
 const TableUser = (props) => {
   const { listUser } = props;
+
+  // const fetchUserData = async (name) => {
+  //   try {
+  //     let res = await getUser(name);
+  //     console.log("Data get a user", res); // Kiểm tra giá trị trả về của API
+  //     if (res.data.err === 0 && res.data.DT.rows) {
+  //       return res.data.DT.rows[0];
+  //     }
+  //   } catch (error) {
+  //     // console.error("Failed to fetch user:", error);
+  //     return null;
+  //   }
+  // };
+
+  // const handleViewUser = async (name) => {
+  //   const userData = await fetchUserData(name);
+  //   if (userData) {
+  //     setShowModalView(true);
+  //     setSelectedUser(userData);
+  //     // props.setShowModalView(true);
+  //   }
+  // };
 
   return (
     <div>
@@ -34,7 +57,10 @@ const TableUser = (props) => {
                 <td>{item.Department?.nameDepartment}</td>
                 {/* Sử dụng optional chaining để tránh lỗi khi Department không tồn tại */}
                 <td className={cx("btn-action")}>
-                  <button className={cx("btn-view")}>
+                  <button
+                    className={cx("btn-view")}
+                    onClick={() => props.handleViewUser(item)}
+                  >
                     <GrFormView />
                   </button>
                   <button

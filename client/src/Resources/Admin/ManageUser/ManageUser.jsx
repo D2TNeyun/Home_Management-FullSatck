@@ -4,21 +4,30 @@ import ModalCreateUser from "./ModalCreateUser";
 import React, { useState, useEffect } from "react";
 import { UserAddOutlined } from "@ant-design/icons";
 import TableUser from "./GetAllUser";
-import { getAllUser } from "../../../Services/apiService";
+import {
+  getAllUser,
+  getDepartment,
+  getUser
+} from "../../../Services/apiService";
 import ModalUpdateUser from "./ModalUpdateUser";
+import ModalViewUser from "./ModalViewUser";
+
 
 const cx = classNames.bind(styles);
 const ManageUser = (props) => {
-  const [showModalCreateUser, setShowModalCreateUser] = useState(false);
-  const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
-  const [dataUpdateUser, setDataUpdateUser] = useState({});
+  // const {dataUser} = props;
 
   const [listUser, setListUser] = useState([]);
+  const [showModalCreateUser, setShowModalCreateUser] = useState(false);
+  const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
+  const [selectedUser, setSelectedUser] = useState({});
+  const [dataUpdateUser, setDataUpdateUser] = useState({});
+  const [showModalView, setShowModalView] = useState(false);
 
   const fetchUserList = async () => {
     try {
       let res = await getAllUser();
-      console.log(res); // Kiểm tra giá trị trả về của getAllUser
+      console.log("Data getAll", res); // Kiểm tra giá trị trả về của getAllUser
       if (res.err === 0) {
         setListUser(res.DT.rows);
       }
@@ -27,7 +36,18 @@ const ManageUser = (props) => {
     }
   };
 
-
+  const fetchUserData = async (name) => {
+    try {
+      let res = await getUser(name);
+      // console.log("Data get a user", res); // Kiểm tra giá trị trả về của API
+      if (res.data.err === 0 && res.data.DT.rows) {
+        return res.data.DT.rows[0];
+      }
+    } catch (error) {
+      // console.error("Failed to fetch user:", error);
+      return null;
+    }
+  };
   useEffect(() => {
     fetchUserList();
   }, []);
@@ -36,6 +56,11 @@ const ManageUser = (props) => {
     setShowModalUpdateUser(true);
     setDataUpdateUser(user);
   };
+
+  const handleViewUser = (user) => {
+    setShowModalView(true);
+    setSelectedUser(user);
+  }
 
   return (
     <>
@@ -54,6 +79,7 @@ const ManageUser = (props) => {
             <TableUser
               listUser={listUser}
               handleClickBtnUpdate={handleClickBtnUpdate}
+              handleViewUser={handleViewUser}
             />
           </div>
           <ModalCreateUser
@@ -66,6 +92,12 @@ const ManageUser = (props) => {
             setShow={setShowModalUpdateUser}
             dataUpdateUser={dataUpdateUser}
             fetchUserList={fetchUserList}
+          />
+          <ModalViewUser
+          show={showModalView}
+          setShow={setShowModalView}
+          selectedUser={selectedUser}
+          // fetchUserList={fetchUserList}
           />
         </div>
       </div>

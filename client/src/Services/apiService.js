@@ -15,6 +15,10 @@ const getAllUser = () => {
     return axios.get('/admin/getAllUser');
 }
 
+const getUser = (name) => {
+    return axios.get(`/admin/getAllUser?name=${name}`);
+}
+
 const putUpdateUser = (id, position, username, avatar, id_Department) =>{
     const data = new FormData();
     data.append('id', id); 
@@ -33,5 +37,6 @@ export {
     postCreateNewUser,
     getAllUser,
     putUpdateUser,
-    getDepartment
+    getDepartment,
+    getUser
 };

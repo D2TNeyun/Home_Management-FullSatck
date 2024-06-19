@@ -1,3 +1,4 @@
+
 import classNames from "classnames/bind";
 import styles from "./ManageUser.module.scss";
 import Modal from "react-bootstrap/Modal";
@@ -76,7 +77,7 @@ const ModalUpdateUser = (props) => {
     if (data && data.err === 0) {
       toast.success(data.mes);
       handleClose();
-      await props.fetchUserList() && props.fetchUserList();
+      await props.fetchUserList();
     }
     if (data && data.err !== 0) {
       toast.error(data.mes);
