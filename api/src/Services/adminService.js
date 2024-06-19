@@ -58,7 +58,7 @@ export const updateProfilService = ({ id, username, avatar, position, id_Departm
 
                 // Delete the old image from Cloudinary if it exists
                 if (existUser.avatar) {
-                    const oldImageId = oldImageUrl.split('/').slice(-2).join('/').split('.')[0];
+                    const oldImageId = existUser.avatar.split('/').pop().split('.')[0];
                     console.log(`Deleting old image with ID: ${oldImageId}`); // Logging để kiểm tra ID của ảnh cũ
                     const destroyResult = await cloudinary.uploader.destroy(oldImageId);
                     console.log(`Cloudinary destroy response:`, destroyResult); // Logging để kiểm tra phản hồi từ Cloudinary

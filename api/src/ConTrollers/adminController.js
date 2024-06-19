@@ -1,5 +1,7 @@
 import { internalServerError, notFound } from '../Middleware/handle_err';
 import * as Service from '../Services'
+const cloudinary = require('cloudinary').v2;
+
 
 export const getCurrent = async (req, res) => {
     try {
@@ -33,7 +35,7 @@ export const updateUserController = async (req, res) => {
         const id = req.params.id;
         const { username, position, id_Department } = req.body; // Ensure this is a string
 
-        let data = await updateProfilService({ id, id_Department, username, position, avatar });
+        let data = await Service.updateProfilService({ id, id_Department, username, position, avatar });
         
         if (!data || data.err) {
             if (avatar) await cloudinary.uploader.destroy(avatar.filename); // Xóa ảnh mới nếu cập nhật thất bại
