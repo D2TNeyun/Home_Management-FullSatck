@@ -50,10 +50,16 @@ export const updateProfilService = ({ id, username, avatar, position, id_Departm
         let existName = await db.User.findOne({ where: { id } });
         if (existName) {
             let updateFields = { username, position, id_Department }// Update the correct field name
-            if (avatar) {
-                // Upload the image to Cloudinary
+              if (avatar) {
+                // Upload the new image to Cloudinary
                 const result = await cloudinary.uploader.upload(avatar.path);
                 updateFields.avatar = result.secure_url;
+
+                // Delete the old image from Cloudinary if it exists
+                if (existName.avatar) {
+                    const oldImageId = existName.avatar.split('/').pop().split('.')[0];
+                    await cloudinary.uploader.destroy(oldImageId);
+                }
             }
             const updatedRowCount = await db.User.update(updateFields, { where: { id } });
             resolve({
@@ -106,6 +112,23 @@ export const deleteStaff = ({ id }) => new Promise(async (resolve, reject) => {
         resolve({
             err: response > 0 ? 0 : 1,
             mes: response > 0 ? `${response} Staff deleted` : "Can't delete staff or not found",
+        })
+
+    } catch (error) {
+        reject(error);
+
+    }
+})
+
+export const deleteUser = ({ id }) => new Promise(async (resolve, reject) => {
+    try {
+
+        const response = await db.User.destroy({
+            where: { id }
+        })
+        resolve({
+            err: response > 0 ? 0 : 1,
+            mes: response > 0 ? `${response} User deleted` : "Can't delete user or not found",
         })
 
     } catch (error) {

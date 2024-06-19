@@ -79,4 +79,18 @@ export const deleteStaffController = async (req, res) => {
     }
 }
 
+export const deleteUserController = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await Service.deleteUser({ id });
+        return res.json(data);
+    } catch (e) {
+        console.error(e);
+        if (e) {
+            return res.status(400).json({ error: e });
+        }
+        return res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 

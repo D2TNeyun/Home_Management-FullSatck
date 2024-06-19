@@ -12,6 +12,7 @@ const router = express.Router();
 router.get('/getProfile', ConTrollers.getCurrent);
 router.get('/getAllUser', ConTrollers.getAllUser);
 router.delete('/deleteStaff/:id', ConTrollers.deleteStaffController);
+router.delete('/deleteUser/:id', ConTrollers.deleteUserController);
 router.put('/updateStaff/:id', ConTrollers.updateStaffController);
 router.put('/updateUser/:id', uploadCloud.single('avatar'), ConTrollers.updateUserController);
 

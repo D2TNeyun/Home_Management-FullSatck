@@ -61,6 +61,7 @@ const ModalViewUser = (props) => {
     setEmail("");
     setPosition("");
     setAvatar("");
+    props.resetDataUser();
   };
 
   return (

@@ -60,7 +60,12 @@ const ManageUser = (props) => {
   const handleViewUser = (user) => {
     setShowModalView(true);
     setSelectedUser(user);
-  }
+  };
+
+  const resetDataUser = () => {
+    setDataUpdateUser({});
+    setSelectedUser({});
+  };
 
   return (
     <>
@@ -92,12 +97,13 @@ const ManageUser = (props) => {
             setShow={setShowModalUpdateUser}
             dataUpdateUser={dataUpdateUser}
             fetchUserList={fetchUserList}
+            resetDataUser={resetDataUser}
           />
           <ModalViewUser
           show={showModalView}
           setShow={setShowModalView}
           selectedUser={selectedUser}
-          // fetchUserList={fetchUserList}
+          resetDataUser={resetDataUser}
           />
         </div>
       </div>

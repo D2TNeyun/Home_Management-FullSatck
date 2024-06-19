@@ -92,6 +92,7 @@ const ModalUpdateUser = (props) => {
     setSelectedDepartment("");
     setAvatar("");
     setPreview("");
+    props.resetDataUser();
   };
 
   return (
