@@ -33,17 +33,18 @@ export const updateUserController = async (req, res) => {
         const id = req.params.id;
         const { username, position, id_Department } = req.body; // Ensure this is a string
 
-        let data = await Service.updateProfilService({ id, id_Department, username, position, avatar });
-        if(!data){
-            if(avatar) cloudinary.uploader.destroy(avatar.filename)
+        let data = await updateProfilService({ id, id_Department, username, position, avatar });
+        
+        if (!data || data.err) {
+            if (avatar) await cloudinary.uploader.destroy(avatar.filename); // Xóa ảnh mới nếu cập nhật thất bại
+            return res.status(400).json(data);
         }
+
         console.log(data);
         return res.json(data);
     } catch (e) {
         console.error(e);
-        if (e) {
-            return res.status(400).json({ error: e });
-        }
+        if (avatar) await cloudinary.uploader.destroy(avatar.filename); // Xóa ảnh mới nếu có lỗi xảy ra
         return res.status(500).json({ error: "Internal Server Error" });
     }
 }
