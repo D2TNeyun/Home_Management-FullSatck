@@ -4,7 +4,7 @@ import styles from "./ManageUser.module.scss";
 import { GrFormView } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { getUser } from "../../../Services/apiService";
+// import { getAUser } from "../../../Services/apiService";
 import ModalViewUser from "./ModalViewUser";
 const cx = classNames.bind(styles);
 
@@ -69,7 +69,10 @@ const TableUser = (props) => {
                   >
                     <FaEdit />
                   </button>
-                  <button className={cx("btn-Delete")}>
+                  <button
+                    className={cx("btn-Delete")}
+                    onClick={() => props.handleClickBtnDelete(item)}
+                  >
                     <MdDelete />
                   </button>
                 </td>

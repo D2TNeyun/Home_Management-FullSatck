@@ -48,52 +48,69 @@ export const getAllUserService = ({ name, ...query }) => new Promise(async (reso
 export const updateProfilService = ({ id, username, avatar, position, id_Department }) => new Promise(async (resolve, reject) => {
     try {
         let existUser = await db.User.findOne({ where: { id } });
-        if (existUser) {
-            let updateFields = { username, position, id_Department };
 
-            if (avatar) {
-                // Upload the new image to Cloudinary
-                const result = await cloudinary.uploader.upload(avatar.path);
-                updateFields.avatar = result.secure_url;
-
-                // Delete the old image from Cloudinary if it exists
-                if (existUser.avatar) {
-                    const oldImageId = existUser.avatar.split('/').pop().split('.')[0];
-                    console.log(`Deleting old image with ID: ${oldImageId}`); // Logging để kiểm tra ID của ảnh cũ
-                    const destroyResult = await cloudinary.uploader.destroy(oldImageId);
-                    console.log(`Cloudinary destroy response:`, destroyResult); // Logging để kiểm tra phản hồi từ Cloudinary
-                    if (destroyResult.result !== 'ok') {
-                        throw new Error(`Failed to delete old image from Cloudinary: ${destroyResult.result}`);
-                    }
-                }
-            }
-
-            const [updatedRowCount] = await db.User.update(updateFields, { where: { id } });
-
-            if (updatedRowCount) {
-                resolve({
-                    err: 0,
-                    mes: `${updatedRowCount} Updated successfully`,
-                });
-            } else {
-                if (avatar) await cloudinary.uploader.destroy(result.public_id); // Xóa ảnh mới nếu cập nhật thất bại
-                resolve({
-                    err: 1,
-                    mes: "Update failed",
-                });
-            }
-        } else {
-            resolve({
+        if (!existUser) {
+            return resolve({
                 err: 1,
                 mes: "User not found",
             });
         }
+
+        let updateFields = { username, position, id_Department };
+
+        // Upload new avatar if provided
+        if (avatar) {
+            const uploadResponse = await cloudinary.uploader.upload(avatar.path, {
+                folder: 'learn_nodejs', // Adjust folder as necessary
+            });
+
+            if (!uploadResponse.secure_url) {
+                throw new Error('Failed to upload new image to Cloudinary');
+            }
+
+            updateFields.avatar = uploadResponse.secure_url;
+
+            // Delete old avatar if it exists
+            if (existUser.avatar) {
+                const oldImageUrl = existUser.avatar;
+                const urlParts = oldImageUrl.split('/');
+                const imageFileName = urlParts[urlParts.length - 1];
+                const oldImageId = imageFileName.split('.')[0];
+
+                console.log(`Deleting old image ID: ${oldImageId}`);
+
+                const deleteResult = await cloudinary.uploader.destroy(oldImageId);
+
+                console.log(`Cloudinary delete response:`, deleteResult);
+
+                if (deleteResult.result !== 'ok' && deleteResult.result !== 'not found') {
+                    throw new Error(`Failed to delete old image from Cloudinary: ${deleteResult.result}`);
+                }
+            }
+        }
+
+        const [updatedRowCount] = await db.User.update(updateFields, { where: { id } });
+
+        if (updatedRowCount) {
+            resolve({
+                err: 0,
+                mes: `${updatedRowCount} Updated successfully`,
+            });
+        } else {
+            if (avatar) await cloudinary.uploader.destroy(uploadResponse.public_id); // Delete new image if update fails
+            resolve({
+                err: 1,
+                mes: "Update failed",
+            });
+        }
     } catch (error) {
-        console.error(`Error updating user profile: ${error.message}`); // Logging lỗi
-        if (avatar) await cloudinary.uploader.destroy(avatar.filename); // Xóa ảnh mới nếu có lỗi xảy ra
+        console.error(`Error updating user profile: ${error.message}`); // Log error
+        if (avatar) await cloudinary.uploader.destroy(avatar.filename); // Delete new image if an error occurs
         reject(error);
     }
 });
+
+
 
 export const updateStaffService = ({ id, usernameStaff, emailStaff, position, role }) => new Promise(async (resolve, reject) => {
     try {
@@ -141,15 +158,27 @@ export const deleteUser = ({ id }) => new Promise(async (resolve, reject) => {
 
         if (user && user.avatar) {
             const oldImageUrl = user.avatar;
-            const oldImageId = oldImageUrl.split('/').slice(-2).join('/').split('.')[0];
-            
-            console.log(`Deleting image with ID: ${oldImageId}`); // Logging để kiểm tra ID của ảnh
+
+           // Ghi lại toàn bộ URL để đảm bảo nó chính xác
+            console.log(`Full image URL: ${oldImageUrl}`);
+
+            // Trích xuất ID hình ảnh mạnh mẽ hơn
+            const urlParts = oldImageUrl.split('/');
+            const imageFileName = urlParts[urlParts.length - 1];
+            const folderPath = urlParts.slice(-2, -1)[0]; // Giải nén đường dẫn thư mục nếu có
+            const oldImageId = folderPath ? `${folderPath}/${imageFileName.split('.')[0]}` : imageFileName.split('.')[0];
+
+            // Ghi nhật ký các phần được trích xuất để đảm bảo trích xuất chính xác
+            console.log(`Image file name: ${imageFileName}`);
+            console.log(`Folder path: ${folderPath}`);
+            console.log(`Extracted image ID: ${oldImageId}`);
 
             const result = await cloudinary.uploader.destroy(oldImageId);
 
-            console.log(`Cloudinary response:`, result); // Logging để kiểm tra phản hồi từ Cloudinary
+           // Ghi lại phản hồi của Cloudinary để sửa lỗi tốt hơn
+            console.log(`Cloudinary response:`, result);
 
-            if (result.result !== 'ok') {
+            if (result.result !== 'ok' && result.result !== 'not found') {
                 throw new Error(`Failed to delete image from Cloudinary: ${result.result}`);
             }
         }
@@ -163,10 +192,12 @@ export const deleteUser = ({ id }) => new Promise(async (resolve, reject) => {
             mes: response > 0 ? `${response} User deleted` : "Can't delete user or not found",
         });
     } catch (error) {
-        console.error(`Error deleting user: ${error.message}`); // Logging lỗi
+        // Log the entire error for better debugging
+        console.error(`Error deleting user: ${error.message}`, error);
         reject(error);
     }
 });
+
 
 
 

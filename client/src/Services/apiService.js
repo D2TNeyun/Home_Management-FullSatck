@@ -15,7 +15,7 @@ const getAllUser = () => {
     return axios.get('/admin/getAllUser');
 }
 
-const getUser = (name) => {
+const getAUser = (name) => {
     return axios.get(`/admin/getAllUser?name=${name}`);
 }
 
@@ -33,10 +33,16 @@ const getDepartment = () => {
     return axios.get('/dpm/getDpm');
 }
 
+const deleteUser = (id) => {    
+    return axios.delete(`/admin/deleteUser/`+id);
+}
+
+
 export {
     postCreateNewUser,
     getAllUser,
     putUpdateUser,
     getDepartment,
-    getUser
+    getAUser,
+    deleteUser
 };
