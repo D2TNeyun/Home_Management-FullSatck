@@ -4,9 +4,6 @@ const postCreateNewUser = (email, password, avatar) =>{
     const data = new FormData(); 
     data.append("email", email);
     data.append("password", password);
-    // data.append("username", username);
-    // data.append("position", position);
-    // data.append("role", role);
     data.append("avatar", avatar);
     return axios.post('/register', data)
 }
@@ -37,6 +34,11 @@ const deleteUser = (id) => {
     return axios.delete(`/admin/deleteUser/`+id);
 }
 
+const postLogin = (email, password) => {    
+    return axios.post(`/login`, { email: email, password: password});
+}
+
+
 
 export {
     postCreateNewUser,
@@ -44,5 +46,6 @@ export {
     putUpdateUser,
     getDepartment,
     getAUser,
-    deleteUser
+    deleteUser,
+    postLogin
 };

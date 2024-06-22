@@ -113,40 +113,7 @@ const ModalCreateUser = (props) => {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
-            {/* <div className="col-md-5">
-              <label className="form-label">UserName</label>
-              <input
-                type="text"
-                className="form-control"
-                value={username}
-                onChange={(event) => setUsername(event.target.value)}
-              />
-            </div> */}
-            {/* <div className="col-md-3">
-              <label className="form-label">Position</label>
-              <select
-                className="form-select"
-                onChange={(event) => setPosition(event.target.value)}
-                value={position}
-              >
-                <option>...</option>
-                <option value="Nhan vien">Nhan vien</option>
-                <option value="Giam doc">Giam doc</option>
-                <option value="Truong phong">Truong phong</option>
-              </select>
-            </div> */}
-            {/* <div className="col-md-3">
-              <label className="form-label">Role</label>
-              <select
-                className="form-select"
-                onChange={(event) => setRole(event.target.value)}
-                value={role}
-              >
-                <option>...</option>
-                <option value="AD">AD</option>
-                <option value="NV">NV</option>
-              </select>
-            </div> */}
+    
             <div className={cx("upload-avatar")}>
               <label className={cx("label-upload")} htmlFor="labelUpload">
                 <FcPlus /> Upload Avatar

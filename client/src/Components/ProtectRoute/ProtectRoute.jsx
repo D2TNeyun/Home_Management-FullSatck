@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 // import Forbidden from '../../resources/Both/Forbidden/Forbidden';
-// import { useEffect } from 'react';
-// import AuthService from '../../Services/AuthService';
+import { useEffect } from 'react';
+import AuthService from '../../Services/AuthService';
 
 
 
@@ -10,13 +10,13 @@ const RoleBaseRoute = (props) => {
     const isAdminRoute = window.location.pathname.startsWith("/admin");
     const user = useSelector((state) => state.user.user);
     const userRole = user?.role;
-    // console.log("Role", userRole)
+    console.log("Role", userRole)
 
-    // if (isAdminRoute && userRole === "AD") {
-    //     return <>{props.children}</>;
-    // } else {
-    //     // return <Forbidden />;
-    // }
+    if (isAdminRoute && userRole === "AD") {
+        return <>{props.children}</>;
+    } else {
+        // return <Forbidden />;
+    }
 };
 
 function ProtectedRoute(props) {
@@ -25,13 +25,13 @@ function ProtectedRoute(props) {
     // console.log("Protect route")
     return (
         <>
-            {/* {isAuthenticated === true ? (
+            {isAuthenticated === true ? (
                 <>
                     <RoleBaseRoute>{props.children}</RoleBaseRoute>
                 </>
             ) : (
                 <Navigate to={"/login"} replace />
-            )} */}
+            )}
 
 
         </>

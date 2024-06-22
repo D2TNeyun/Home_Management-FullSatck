@@ -6,7 +6,7 @@ export const password = joi.string().min(6).required()
 export const username = joi.string().required()
 export const position = joi.string().required()
 export const id_Department = joi.string().required()
-export const avatar = joi.string().required()
+export const avatar = joi.string()
 
 
 export const id_User = joi.string()

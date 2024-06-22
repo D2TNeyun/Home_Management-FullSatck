@@ -177,21 +177,7 @@ const layoutAdmin = () => {
           <Content style={{ backgroundColor: "#F0F3F" }}>
             <div>
               <Outlet />
-              <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={["fade", "scale"]}
-              />
-              {/* Same as */}
-              <ToastContainer />
+             
             </div>
           </Content>
         </Layout>

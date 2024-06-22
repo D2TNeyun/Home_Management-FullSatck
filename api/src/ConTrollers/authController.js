@@ -67,13 +67,14 @@ export const loginStaff = async (req, res) => {
 export const register = async (req, res) => {
     try {
         const fileData = req.file 
+        const {position} = req.body
         console.log(fileData)
         const { error } = joi.object({ email, password, avatar }).validate({...req.body, avatar: fileData?.path})
         if (error) {
             if(fileData) cloudinary.uploader.destroy(fileData.filename)
             return badRequest(error.details[0]?.message, res);
         }
-        const response = await Service.registerService({...req.body, fileData})
+        const response = await Service.registerService({...req.body, fileData, position})
         return res.json(response);
     } catch (e) {
         console.error(e);

@@ -30,3 +30,18 @@
     font-size: 26px;
     margin-left: 5px;
 }
+
+navbar-collapse {
+    flex-basis: 100%;
+    display: inline-grid;
+    flex-grow: 1;
+    align-items: center;
+}
+
+@media (min-width: 992px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: flex !important;
+        flex-basis: auto;
+        justify-content: space-between;
+    }
+}
