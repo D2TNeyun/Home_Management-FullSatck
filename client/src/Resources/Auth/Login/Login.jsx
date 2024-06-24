@@ -6,7 +6,9 @@ import { postLogin } from "../../../Services/apiService";
 import { MdEmail } from "react-icons/md";
 import { GoPasskeyFill } from "react-icons/go";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import { ImSpinner5 } from "react-icons/im";
+import { useDispatch } from "react-redux";
+import {loginSuccess} from "../../../Redux/Reducer/userSlice";
 import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
@@ -15,41 +17,37 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  
   const onChangeIcon = () => {
     setShowPassword(!showPassword);
   };
 
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
   const handleLogin = async () => {
-    //validate
-    const isValidEmail = validateEmail(email);
-    if (!isValidEmail) {
-      toast.error("Email is not valid");
-      return;
-    }
-    if (!password) {
-      toast.error("Password is not valid");
-      return;
-    }
+    setIsLoading(true);
     //callApi
     let data = await postLogin(email, password);
     if (data && data.success === true) {
-      toast.success(data.message);
-      navigate("/");
+      if (data.inforUser.position === "Giam doc") {
+        dispatch(loginSuccess(data));
+        setIsLoading(false);
+        console.log("dang nhap voiws tu cach giam doc");
+
+        navigate("/admin");
+      } else {
+        dispatch(loginSuccess(data));
+        console.log("dang nhap voiws tu cach user");
+        setIsLoading(false);
+        navigate("/");
+      }
     }
     if (data.error && data.success !== true) {
       toast.error(data.error.message);
+      setIsLoading(false);
+
     }
   };
 
@@ -99,7 +97,11 @@ const Login = () => {
                 <button
                   className={cx("btnLogin")}
                   onClick={() => handleLogin()}
+                  disabled={isLoading}
                 >
+                  {isLoading === true && (
+                    <ImSpinner5 className={cx("spinner")} />
+                  )}
                   Login
                 </button>
               </div>

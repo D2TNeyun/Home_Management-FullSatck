@@ -9,10 +9,10 @@ import AuthService from '../../Services/AuthService';
 const RoleBaseRoute = (props) => {
     const isAdminRoute = window.location.pathname.startsWith("/admin");
     const user = useSelector((state) => state.user.user);
-    const userRole = user?.role;
-    console.log("Role", userRole)
+    const userPosition = user?.role;
+    console.log("Position", userPosition)
 
-    if (isAdminRoute && userRole === "AD") {
+    if (isAdminRoute && userPosition === "Giam doc") {
         return <>{props.children}</>;
     } else {
         // return <Forbidden />;

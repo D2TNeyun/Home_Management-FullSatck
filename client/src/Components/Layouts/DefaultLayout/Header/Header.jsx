@@ -1,49 +1,99 @@
-import "../Header/header.scss";
+import styles from "./header.module.scss";
+import classNames from "classnames/bind";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink, Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../../../Redux/Reducer/userSlice";
+import AuthService from "../../../../Services/AuthService";
+import logo from "../../../../assets/logo.png";
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Space } from "antd";
+
+const cx = classNames.bind(styles);
 
 function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const url = location.pathname;
 
-  const handLogin = () => {
-    navigate("/login");
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+
+  const handleLogout = async () => {
+    const res = await AuthService.logoutApi();
+    if (res.status === 200) {
+      dispatch(logout());
+      navigate("/login");
+      localStorage.removeItem("room");
+    }
   };
+
+  // Kiểm tra giá trị của user.position
+  console.log("User position:", user.position);
+
+  const items = [
+    {
+      label: (
+        <Link
+          to={user.position === "Giam doc" ? "/admin" : "/user"}
+          className={`${cx("dropdownItem")} text-decoration-none`}
+        >
+          Thông tin cá nhân
+        </Link>
+      ),
+      key: "0",
+    },
+    {
+      label: (
+        <p className={cx("dropdownItem")} onClick={handleLogout}>
+          Đăng xuất
+        </p>
+      ),
+      key: "1",
+    },
+  ];
+
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand href="/" className="test">
-          {/* <img className="logo" src="../../../../assets/logo.png" alt="" /> */}
-          <p className="text">ITC</p>
+        <Navbar.Brand as={Link} to="/">
+          <img className={cx("imgLogo")} src={logo} alt="Logo" />
+          <p className={cx("textLogo")}>ITC GROUP</p>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="Narbar-nav">
-            <NavLink to="/user" className="nav-link ">
-              User
-            </NavLink>
-            <NavLink to="/admin" className="nav-link ">
-              Admin
-            </NavLink>
-          </Nav>
-          <Nav className="nav-Setiing">
-            {/* <NavDropdown title="Settings" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Log In</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Log out</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Sign In</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Profile</NavDropdown.Item>
-            </NavDropdown> */}
-            <NavLink
-              to="/login"
-              className="nav-link "
-              onClick={() => handLogin()}
+          <Nav className="" style={{ flexWrap: "wrap" }}>
+            <Nav.Link
+              as={Link}
+              to="/"
+              className={cx("navLink", { active: url === "/" })}
             >
-              Login
-            </NavLink>
+              Home
+            </Nav.Link>
           </Nav>
+        </Navbar.Collapse>
+        <Navbar.Collapse className="justify-content-end">
+          {isAuthenticated ? (
+            <div className={cx("username")}>
+              Welcome to
+              <Dropdown menu={{ items }} trigger={["click"]} placement="bottom">
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    {user?.username || ""}
+                    <DownOutlined />
+                  </Space>
+                </a>
+              </Dropdown>
+            </div>
+          ) : (
+            <Nav.Link as={Link} to="/login" className="text-decoration-none">
+              <button className={cx("btnLogin")}>Login</button>
+            </Nav.Link>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

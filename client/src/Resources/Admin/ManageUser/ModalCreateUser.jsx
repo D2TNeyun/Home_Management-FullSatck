@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { FcPlus } from "react-icons/fc";
-import axios from "axios";
+import { ImSpinner5 } from "react-icons/im";
 import { toast } from "react-toastify";
 import { postCreateNewUser } from "../../../Services/apiService";
 const cx = classNames.bind(styles);
@@ -16,22 +16,15 @@ const ModalCreateUser = (props) => {
     setShow(false);
     setEmail("");
     setPassword("");
-    // setUsername("");
-    // setPosition("Nhan vien");
-    // setRole("Admin");
     setAvatar("");
     setPreview("");
   };
+  const [isLoading, setIsLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [username, setUsername] = useState("");
-  // const [position, setPosition] = useState("Nhan vien");
   const [avatar, setAvatar] = useState("");
   const [preview, setPreview] = useState("");
-  // const [role, setRole] = useState("AD");
-
-  //toaster
 
   const handleUploadAvatar = (event) => {
     if (event.target && event.target.files && event.target.files[0]) {
@@ -41,38 +34,20 @@ const ModalCreateUser = (props) => {
       // setPreview("");
     }
   };
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
 
   const handleSubmitCreateUser = async () => {
-    //validate
-    const isValidEmail = validateEmail(email);
-    if (!isValidEmail) {
-      toast.error("Email is not valid");
-      return;
-    }
-    if (!password) {
-      toast.error("Password is not valid");
-      return;
-    }
-    if (!avatar) {
-      toast.error("Avatar is not valid");
-      return;
-    }
-    //tApi
+    setIsLoading(true);
+    //callApi
     let data = await postCreateNewUser(email, password, avatar);
     if (data && data.err === 0) {
       toast.success(data.mes);
+      setIsLoading(false);
       handleClose();
       await props.fetchUserList();
     }
     if (data && data.err !== 0) {
       toast.error(data.mes);
+      setIsLoading(false);
     }
   };
 
@@ -113,7 +88,7 @@ const ModalCreateUser = (props) => {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </div>
-    
+
             <div className={cx("upload-avatar")}>
               <label className={cx("label-upload")} htmlFor="labelUpload">
                 <FcPlus /> Upload Avatar
@@ -138,7 +113,12 @@ const ModalCreateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
+          <Button
+            variant="primary"
+            onClick={() => handleSubmitCreateUser()}
+            disabled={isLoading}
+          >
+            {isLoading === true && <ImSpinner5 className={cx("spinner")} />}
             Save
           </Button>
         </Modal.Footer>

@@ -6,6 +6,8 @@ import { postCreateNewUser } from "../../../Services/apiService";
 import { MdEmail } from "react-icons/md";
 import { GoPasskeyFill } from "react-icons/go";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { ImSpinner5 } from "react-icons/im";
+
 import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
@@ -14,39 +16,24 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChangeIcon = () => {
     setShowPassword(!showPassword);
   };
 
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
   const navigate = useNavigate();
   const handleRegist = async () => {
-    //validate
-    const isValidEmail = validateEmail(email);
-    if (!isValidEmail) {
-      toast.error("Email is not valid");
-      return;
-    }
-    if (!password) {
-      toast.error("Password is not valid");
-      return;
-    }
+    setIsLoading(true);
     //callApi
     let data = await postCreateNewUser(email, password);
     if (data && data.err === 0) {
       toast.success(data.mes);
+      setIsLoading(false);
       navigate("/login");
-
     }
     if (data && data.err !== 0) {
+      setIsLoading(false);
       toast.error(data.mes);
     }
   };
@@ -96,7 +83,11 @@ const Register = () => {
                 <button
                   className={cx("btnregister")}
                   onClick={() => handleRegist()}
+                  disabled={isLoading}
                 >
+                  {isLoading === true && (
+                    <ImSpinner5 className={cx("spinner")} />
+                  )}
                   register
                 </button>
               </div>

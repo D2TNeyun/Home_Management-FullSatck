@@ -1,5 +1,4 @@
 import axios from "./customize_axios";
-
 const postCreateNewUser = (email, password, avatar) =>{
     const data = new FormData(); 
     data.append("email", email);
@@ -35,7 +34,7 @@ const deleteUser = (id) => {
 }
 
 const postLogin = (email, password) => {    
-    return axios.post(`/login`, { email: email, password: password});
+    return axios.post(`/login`, { email: email, password: password, delay: 10000 });
 }
 
 

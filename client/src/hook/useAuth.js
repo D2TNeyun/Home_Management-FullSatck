@@ -7,7 +7,7 @@ export default function useAuth() {
 
     const isAuthenticated = profileLogin.isAuthenticated;
     const profile = profileLogin.user;
-    const role = profile?.role || null;
+    const position = profile?.position || null;
 
-    return (isAuthenticated, role, profile)
+    return (isAuthenticated, position, profile)
 }

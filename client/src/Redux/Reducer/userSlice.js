@@ -1,4 +1,3 @@
-
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -7,39 +6,40 @@ const initialState = {
     user: {
         id: "",
         email: "",
-        phone: "",
         username: "",
         avatar: "",
-        role: "",
+        position: "",
+        id_Department: "",
     },
 };
 
-export const userSlice = createSlice({
-    name: "user",
+const userSlice = createSlice({
+    name: 'user',
     initialState,
     reducers: {
-        doLoginAction: (state, action) => {
-            // console.log("payload Redux >>> ", action);
+        loginSuccess: (state, action) => {
+            console.log('checkLoginSuccess', action);
             state.isAuthenticated = true;
             state.isLoading = false;
             state.user = action.payload;
         },
-
-        doLogoutAction: (state, action) => {
+        logout: (state) => {
             state.isAuthenticated = false;
+            state.isLoading = false;
             state.user = {
                 id: "",
                 email: "",
-                phone: "",
                 username: "",
-                position: "",
                 avatar: "",
-                role: "",
+                position: "",
+                id_Department: "",
             };
         },
-    },
+        setLoading: (state, action) => {
+            state.isLoading = action.payload;
+        }
+    }
 });
 
-export const { doLoginAction, doLogoutAction } = userSlice.actions;
-
+export const { loginSuccess, logout, setLoading } = userSlice.actions;
 export default userSlice.reducer;

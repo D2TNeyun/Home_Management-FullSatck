@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #a3eff6;
+    background-color: #c0f0f4;
 }
 
 .login-container {
@@ -55,7 +55,8 @@
         margin-block: 5px;
         margin-left: 10px;
     }
-    .input{
+
+    .input {
         display: flex;
         width: 100%;
         border-radius: 15px;
@@ -64,7 +65,7 @@
         border: 1px solid rgba(210, 207, 207, 0);
         border-radius: 25px;
         outline: none;
-    
+
     }
 }
 
@@ -87,24 +88,47 @@
         border: none;
         font-family: 'Reem Kufi', sans-serif;
         font-weight: bold;
-        
+        cursor: pointer;
 
         &:hover {
             background-position: right center;
             color: #733f3f;
         }
+
+        &:disabled{
+            background: #dddddd;
+            color: #afafaf;
+            cursor: no-drop; 
+        }
+
+        .spinner {
+            font-size: 20px;
+            margin-right: 7px;
+            margin-bottom: 3px;
+            animation: spin 1s infinite linear;
+        }
+        @keyframes spin {
+            from {
+                transform: scale(1) rotate(0deg);
+            }
+            to {
+                transform: scale(1) rotate(360deg);
+            }
+        }
     }
+
 }
 
-.form-Login{
+.form-Login {
     .password-container {
         display: flex;
         align-items: center;
         position: relative;
-      }
-      .iconEye{
+    }
+
+    .iconEye {
         position: absolute;
         right: 10px;
         cursor: pointer;
-      }
+    }
 }
