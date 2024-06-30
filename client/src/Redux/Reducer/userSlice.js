@@ -8,38 +8,34 @@ const initialState = {
         email: "",
         username: "",
         avatar: "",
-        position: "",
-        id_Department: "",
     },
 };
 
-const userSlice = createSlice({
-    name: 'user',
+export const userSlice = createSlice({
+    name: "user",
     initialState,
     reducers: {
-        loginSuccess: (state, action) => {
-            console.log('checkLoginSuccess', action);
+        doLoginAction: (state, action) => {
+            // console.log("payload Redux >>> ", action);
             state.isAuthenticated = true;
             state.isLoading = false;
             state.user = action.payload;
         },
-        logout: (state) => {
+
+        doLogoutAction: (state, action) => {
             state.isAuthenticated = false;
-            state.isLoading = false;
             state.user = {
                 id: "",
                 email: "",
                 username: "",
-                avatar: "",
                 position: "",
-                id_Department: "",
+                avatar: "",
+
             };
         },
-        setLoading: (state, action) => {
-            state.isLoading = action.payload;
-        }
-    }
+    },
 });
 
-export const { loginSuccess, logout, setLoading } = userSlice.actions;
+export const { doLoginAction, doLogoutAction } = userSlice.actions;
+
 export default userSlice.reducer;

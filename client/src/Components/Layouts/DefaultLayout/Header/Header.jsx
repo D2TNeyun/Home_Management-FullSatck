@@ -6,7 +6,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../../Redux/Reducer/userSlice";
+import { doLogoutAction } from "../../../../Redux/Reducer/userSlice";
 import AuthService from "../../../../Services/AuthService";
 import logo from "../../../../assets/logo.png";
 import { DownOutlined } from "@ant-design/icons";
@@ -26,20 +26,17 @@ function Header() {
   const handleLogout = async () => {
     const res = await AuthService.logoutApi();
     if (res.status === 200) {
-      dispatch(logout());
-      navigate("/login");
-      localStorage.removeItem("room");
+      dispatch(doLogoutAction());
+      localStorage.removeItem('token');
+      navigate("/");
     }
   };
-
-  // Kiểm tra giá trị của user.position
-  console.log("User position:", user.position);
-
+  
   const items = [
     {
       label: (
         <Link
-          to={user.position === "Giam doc" ? "/admin" : "/user"}
+          to={user?.inforUser?.position === "Giam doc" ? "/admin" : "/user"}
           className={`${cx("dropdownItem")} text-decoration-none`}
         >
           Thông tin cá nhân

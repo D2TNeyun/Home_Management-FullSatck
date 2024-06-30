@@ -1,0 +1,76 @@
+.profile-container{
+    margin: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    .profile-avatar{
+        width: 30%;
+    }
+
+    .profile-content{
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        border-radius: 18px;
+        width: 50%;
+
+    }
+}
+.img-preview {
+    border: 1px dashed rgb(82, 49, 49);
+    border-radius: 5px;
+    height: 210px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+
+    .preview {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+.textProfile {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.btn-update{
+    background-image: linear-gradient(to right, #1c98f8 0%, #4bc3d5 51%, #469fda 100%);
+    margin: 15px 5px;
+    padding: 3px 5px;
+    text-align: center;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 10px;
+    display: block;
+    border: none;
+    font-size: 15px;
+    font-weight: 500;
+
+    &:hover {
+        background-position: right center;
+        color: #263a58;
+        text-decoration: none;
+        box-shadow: 0 12px 16px 0 rgba(83, 74, 74, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+.spinner {
+    font-size: 20px;
+    margin-right: 7px;
+    margin-bottom: 3px;
+    animation: spin 1s infinite linear;
+}
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+.form-control{
+    width: 100%;
+}

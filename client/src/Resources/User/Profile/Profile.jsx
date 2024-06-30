@@ -1,11 +1,10 @@
 import classNames from "classnames/bind";
-import styles from "./Homepage.module.scss";
+import styles from "./Profile.module.scss";
 import { getProflie } from "../../../Services/apiService";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import ModalUpdateProfile from "./ModalUpdate";
+import ModalUpdateProfile from "./ModalUpdateProfile";
 const cx = classNames.bind(styles);
-const HomePageAdmin = () => {
+const Profile = () => {
 
   const [dataUser, setDataUser] = useState("");
   const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
@@ -107,4 +106,4 @@ const HomePageAdmin = () => {
   );
 };
 
-export default HomePageAdmin;
+export default Profile;

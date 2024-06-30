@@ -1,8 +1,8 @@
 import { notAuthentication } from "./handle_err";
 
 export const isAdmin = (req, res, next) => {
-    const {role} = req.user 
-    if(role !== 'AD') return notAuthentication('Require role Admin', res)
+    const {position} = req.user 
+    if(position !== 'Giam doc') return notAuthentication('Require role Giam doc', res)
     
     next();
 } 

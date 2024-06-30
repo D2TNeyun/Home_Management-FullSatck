@@ -29,21 +29,24 @@ export const createService = ({ id_User, nameDtnk, description, fileData }) => n
     }
 })
 
-export const getDtnk = ({ page, limit, order, name, ...query }) => new Promise(async (resolve, reject) => {
+export const getDtnk = ({ page, order, name, id_User, ...query }) => new Promise(async (resolve, reject) => {
+    // limit
     try {
         const queries = { raw: true, nest: true }
         const offset = (!page || +page <= 1) ? 0 : (+page - 1)  // phân trang
-        const flimit = +limit || +process.env.LIMIT_DTNK  // số lượng lấy dữ liệu
-        queries.offset = offset * flimit
-        queries.limit = flimit
+        // const flimit = +limit || +process.env.LIMIT_DTNK  // số lượng lấy dữ liệu
+        // queries.offset = offset * flimit
+        // queries.limit = flimit
         if (order) queries.order = [order] // sắp xếp tăng/giam 
         if (name) query.nameDtnk = { [Op.substring]: name } // tìm kiếm theo tên
+        if(id_User) query.id_User = { [Op.substring]: id_User }
 
         const response = await db.Dtnk.findAndCountAll({
             where: query,
             ...queries,
             include: [ // lấy dữ liệu bảng phụ
-                { model: db.User, attributes: ['id', 'username'] }
+                { model: db.User, attributes: ['id', 'username'] },
+                { model: db.Award, attributes: ['id', 'nameAward'] },
             ]
         })
         resolve({

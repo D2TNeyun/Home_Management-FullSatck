@@ -5,7 +5,6 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Dropdown, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import AuthService from "../../../Services/AuthService";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const cx = classNames.bind(styles);
@@ -16,8 +15,10 @@ import {
   ProjectOutlined,
   TrophyOutlined,
   LogoutOutlined,
+  GroupOutlined
 } from "@ant-design/icons"; //icon dashboards side menu
 import { Layout, Menu, theme } from "antd";
+import { doLogoutAction } from "../../../Redux/Reducer/userSlice";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -43,8 +44,7 @@ const itemsSlider = [
           marginBottom: "10px",
         }}
       >
-        {" "}
-        ITC Group{" "}
+        ITC Group
       </p>
     </Link>,
     "0",
@@ -60,7 +60,6 @@ const itemsSlider = [
   ),
   getItem(
     <Link to="/admin" className="text-decoration-none">
-      {" "}
       Dashboard
     </Link>,
     "1",
@@ -70,34 +69,33 @@ const itemsSlider = [
   getItem("User", "Sub1", <UserOutlined />, [
     getItem(
       <Link to="/admin/manageUser" className="text-decoration-none">
-        {" "}
-        Danh Sach Can bo
+       List Employee
       </Link>,
       "2"
-    ),
-    getItem(
-      <Link to="/admin/manageStaff" className="text-decoration-none">
-        {" "}
-        Danh Sach Nhan vien
-      </Link>,
-      "3"
     ),
   ]),
 
   getItem("Project", "Sub2", <ProjectOutlined />, [
     getItem(
-      <Link to="/admin/dtnk" className="text-decoration-none">
-        {" "}
-        Danh Sach
+      <Link to="/admin/project" className="text-decoration-none">
+        List of projects
+      </Link>,
+      "3"
+    ),
+  ]),
+
+  getItem("Laudatory", "Sub3", <TrophyOutlined />, [
+    getItem(
+      <Link to="/admin/laudatory" className="text-decoration-none">
+        List of Laudatory
       </Link>,
       "4"
     ),
   ]),
 
-  getItem("Trophy", "Sub3", <TrophyOutlined />, [
+  getItem("Department", "Sub4", <GroupOutlined />, [
     getItem(
-      <Link to="/admin/award" className="text-decoration-none">
-        {" "}
+      <Link to="/admin/dpm" className="text-decoration-none">
         Danh Sach
       </Link>,
       "5"
@@ -110,18 +108,15 @@ const layoutAdmin = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const handleLogout = async () => {
-    const res = await AuthService.logoutApi();
-    if (res.status === 200) {
+    try {
+      await AuthService.logoutApi();   
       dispatch(doLogoutAction());
-      // toast.success("Đăng xuất thành công");
-      navigate("/login");
-      // console.log("Logout thanh cong")
-    }
+      navigate('/login'); 
+      localStorage.removeItem('token');
+  } catch (error) {
+      console.error('Error logging out:', error);
+  }
   };
-
-  // useEffect(() => {
-  //   // fetchNotification();
-  // }, []);
 
   const items = [
     {
@@ -161,7 +156,7 @@ const layoutAdmin = () => {
             <div className={cx("infoUser")}>
               <img
                 className={cx("imgAvatar")}
-                src={`http://localhost:3037/${user?.avatar}`}
+                src={`${user?.inforUser?.avatar}`}
                 alt=""
               />
               <Dropdown
@@ -170,7 +165,7 @@ const layoutAdmin = () => {
                 }}
                 placement="top"
               >
-                <Button> {user?.username || ""}</Button>
+                <Button> {user?.inforUser?.username || ""}</Button>
               </Dropdown>
             </div>
           </Header>

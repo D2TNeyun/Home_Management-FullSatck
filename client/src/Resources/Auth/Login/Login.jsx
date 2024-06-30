@@ -8,7 +8,7 @@ import { GoPasskeyFill } from "react-icons/go";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ImSpinner5 } from "react-icons/im";
 import { useDispatch } from "react-redux";
-import {loginSuccess} from "../../../Redux/Reducer/userSlice";
+import { doLoginAction } from "../../../Redux/Reducer/userSlice";
 import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
@@ -31,14 +31,16 @@ const Login = () => {
     //callApi
     let data = await postLogin(email, password);
     if (data && data.success === true) {
+      // const token = data.data.split(' ')[1]; // Lấy token từ dữ liệu trả về
+      // localStorage.setItem("token", token); // // Lưu trữ token vào localStorage
+
+      dispatch(doLoginAction(data));
+      localStorage.setItem('token', data.data); // Lưu token vào localStorage
       if (data.inforUser.position === "Giam doc") {
-        dispatch(loginSuccess(data));
         setIsLoading(false);
         console.log("dang nhap voiws tu cach giam doc");
-
         navigate("/admin");
       } else {
-        dispatch(loginSuccess(data));
         console.log("dang nhap voiws tu cach user");
         setIsLoading(false);
         navigate("/");
@@ -47,7 +49,6 @@ const Login = () => {
     if (data.error && data.success !== true) {
       toast.error(data.error.message);
       setIsLoading(false);
-
     }
   };
 

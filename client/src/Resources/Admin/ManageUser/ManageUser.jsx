@@ -62,7 +62,7 @@ const ManageUser = (props) => {
   return (
     <>
       <div className={cx("manageUser-container")}>
-        <div className={cx("tille")}>manageUser</div>
+        <div className={cx("tille")}><b>List Employee</b></div>
         <div className={cx("users-content")}>
           <div className={cx("allBtn-manageUser")}>
             <button

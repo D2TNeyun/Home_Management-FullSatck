@@ -7,8 +7,8 @@ import {isAdmin} from "../Middleware/roleMiddleware";
 const router = express.Router();
 
 
-// router.use(verifyToken);
-// router.use(isAdmin);
+router.use(verifyToken);
+router.use(isAdmin);
 router.post('/addDpm', ConTrollers.addDpmController);
 router.get('/getDpm', ConTrollers.getAllDpmController);
 router.put('/updateDpm/:id', ConTrollers.updateDpmController);

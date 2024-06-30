@@ -1,17 +1,20 @@
 import jwt from "jsonwebtoken";
 import {  notAuthentication } from "./handle_err";
 
-const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization
-    if(!token) return notAuthentication('The user is not authentication', res)
-    
-    const access_token = token.split(' ')[1]
-    jwt.verify(access_token, process.env.SECRET_KEY, (err, user) => {
-        if(err) return notAuthentication('AccessToken maby is invalid or expired', res)
-        
+const verifyToken = (req, res, next) => {    
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ success: false, message: "Người dùng chưa đăng nhập" });
+    }
+
+    jwt.verify(token, 'access_token', (err, user) => {
+        if (err) {
+            return res.status(403).json({ success: false, message: "Token không hợp lệ" });
+        }
+
         req.user = user;
         next();
-    })
+    });
 }
 
 export default verifyToken

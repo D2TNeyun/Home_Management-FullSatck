@@ -98,14 +98,6 @@ export const loginService = ({ email, password }) => new Promise(async (resolve,
             reject({ success: false, message: "Invalid password" });
         }
         else {
-            // const access_token = jwt.sign({
-            //     id: user.id,
-            //     id_Department: user.id_Department,
-            //     username: user.username,
-            //     position: user.position,
-            //     email: user.email,
-            //     avatar: user.avatar
-            // }, process.env.SECRET_KEY, { expiresIn: '1d' })
             const inforUser = {
                 id: user.id,
                 id_Department: user.id_Department,
@@ -115,7 +107,7 @@ export const loginService = ({ email, password }) => new Promise(async (resolve,
                 avatar: user.avatar
             } 
             const access_token = jwt.sign(inforUser, 'access_token');
-            resolve({ success: true, message: "Login successful", data: `bearer ${access_token}`, inforUser });
+            resolve({ success: true, message: "Login successful", data: `${access_token}`, inforUser });
         }
     } catch (error) {
         reject(error);

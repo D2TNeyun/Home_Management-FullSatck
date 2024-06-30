@@ -13,7 +13,7 @@ export const addAwardService = ({ id_user, id_Dtnk, nameAward }) => new Promise(
         })
         resolve({
             err: response[1] ? 0 : 1,
-            mes: response[1] ? "Add award successfully" : "Award not found or award is already exists",
+            mes: response[1] ? "Add Laudatory successfully" : "Laudatory not found or Laudatory is already exists",
         })
 
     } catch (error) {
@@ -35,7 +35,7 @@ export const updateAwardService = ({ id, nameAward }) => new Promise(async (reso
         } else {
             resolve({
                 err: 1,
-                mes: "Award not found"
+                mes: "Laudatory not found"
             });
         }
 
@@ -60,7 +60,7 @@ export const getAward = ({name, ...query }) => new Promise(async (resolve, rejec
         })
         resolve({
             err: response ? 0 : 1,
-            mes: response ? "Got" : "Award not found",
+            mes: response ? "Got" : "Laudatory not found",
             Data: response
         })
     } catch (error) {
@@ -75,7 +75,7 @@ export const deletAward = ({ id }) => new Promise(async (resolve, reject) => {
         })
         resolve({
             err: response > 0 ? 0 : 1,
-            mes: response > 0 ? `${response} Department deleted` : "Can't delete department or not found",
+            mes: response > 0 ? `${response} Laudatory deleted` : "Can't delete Laudatory or not found",
         })
 
     } catch (error) {

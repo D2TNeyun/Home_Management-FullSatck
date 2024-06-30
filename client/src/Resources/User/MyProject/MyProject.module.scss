@@ -1,0 +1,200 @@
+//Project 
+.Project-container {
+    padding: 10px;
+
+    .tille {
+        font-weight: 600;
+        font-size: 20px;
+    }
+
+    .Project-content {
+        .btn-Project {
+            .btn-add {
+                background-image: linear-gradient(to right, #1c98f8 0%, #4bc3d5 51%, #469fda 100%);
+                margin: 15px 0;
+                padding: 3px 5px;
+                text-align: center;
+                background-size: 200% auto;
+                color: white;
+                border-radius: 10px;
+                display: block;
+                border: none;
+                font-size: 15px;
+                font-weight: 500;
+
+                &:hover {
+                    background-position: right center;
+                    color: #263a58;
+                    text-decoration: none;
+                    box-shadow: 0 12px 16px 0 rgba(83, 74, 74, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+                }
+            }
+        }
+    }
+}
+
+//Table
+.tbody {
+    font-size: 17px;
+}
+
+.btn-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border: none;
+    cursor: pointer;
+    padding: 10px 10px;
+
+    .btn-view {
+        background-image: linear-gradient(to right, #1c98f8 0%, #4bc3d5 51%, #469fda 100%);
+        padding: 3px 5px;
+        text-align: center;
+        justify-content: center;
+        background-size: 200% auto;
+        color: white;
+        border-radius: 10px;
+        display: flex;
+        border: none;
+        font-size: 23px;
+
+        &:hover {
+            background-position: right center;
+            color: #04070c;
+            text-decoration: none;
+            box-shadow: 0 12px 16px 0 rgba(98, 87, 87, 0.24), 0 17px 50px 0 rgba(68, 56, 56, 0.19);
+        }
+
+    }
+
+    .btn-Edit {
+        background-image: linear-gradient(to right, #cff33e 0%, #8db756 51%, #464e2d 100%);
+        padding: 3px 5px;
+        text-align: center;
+        justify-content: center;
+        background-size: 200% auto;
+        color: white;
+        border-radius: 10px;
+        display: flex;
+        border: none;
+        font-size: 23px;
+        font-weight: 500;
+
+        &:hover {
+            background-position: right center;
+            color: #04070c;
+            text-decoration: none;
+            box-shadow: 0 12px 16px 0 rgba(98, 87, 87, 0.24), 0 17px 50px 0 rgba(68, 56, 56, 0.19);
+        }
+    }
+
+    .btn-Delete {
+        background-image: linear-gradient(to right, #f21111 0%, #974452 51%, #e34545 100%);
+        padding: 3px 5px;
+        text-align: center;
+        justify-content: center;
+        background-size: 200% auto;
+        color: white;
+        border-radius: 10px;
+        display: flex;
+        border: none;
+        font-size: 23px;
+        font-weight: 500;
+
+        &:hover {
+            background-position: right center;
+            color: #04070c;
+            text-decoration: none;
+            box-shadow: 0 12px 16px 0 rgba(98, 87, 87, 0.24), 0 17px 50px 0 rgba(68, 56, 56, 0.19);
+        }
+
+    }
+}
+
+//View 
+.view-container {
+    margin: 10px;
+    display: flex;
+    gap: 30px;
+
+    .view-avatar {
+        width: 30%;
+    }
+
+    .view-content {
+        width: 100%;
+
+    }
+}
+
+.img-preview {
+    border: 1px dashed rgb(82, 49, 49);
+    border-radius: 5px;
+    height: 210px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+
+    .preview {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+.card-body {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    border-radius: 18px;
+}
+
+.textview {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+.spinner {
+    font-size: 20px;
+    margin-right: 7px;
+    margin-bottom: 3px;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+.clickGoback {
+    cursor: pointer;
+    font-size: 15px;
+    color: #04070c;
+}
+
+//Model create project
+
+.container {
+    justify-content: center;
+    display: flex;
+    gap: 40px;
+
+    .content{
+        width: 100%;
+    }
+    .upload-img {
+        width: 25%;
+    }
+
+    .textarea-control {
+        width: 170%;
+    }
+    .form-control{
+        width: 100%;
+    }
+}

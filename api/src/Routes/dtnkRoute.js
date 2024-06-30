@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 //private route
-// router.use(verifyToken);
+router.use(verifyToken);
 router.post('/create', uploadCloud.single('img'), ConTrollers.CreateDtnkController);
 router.get('/getAll', ConTrollers.getAllDtnk);
 router.put('/updateDtnk/:id', uploadCloud.single('img'), ConTrollers.updateDtnkController);
