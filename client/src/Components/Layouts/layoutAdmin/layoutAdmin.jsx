@@ -5,7 +5,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Dropdown, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import AuthService from "../../../Services/AuthService";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const cx = classNames.bind(styles);
 
@@ -110,9 +110,10 @@ const layoutAdmin = () => {
   const handleLogout = async () => {
     try {
       await AuthService.logoutApi();   
+      localStorage.removeItem('token');
       dispatch(doLogoutAction());
       navigate('/login'); 
-      localStorage.removeItem('token');
+
   } catch (error) {
       console.error('Error logging out:', error);
   }

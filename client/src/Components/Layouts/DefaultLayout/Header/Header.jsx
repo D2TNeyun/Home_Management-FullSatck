@@ -4,7 +4,6 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import { doLogoutAction } from "../../../../Redux/Reducer/userSlice";
 import AuthService from "../../../../Services/AuthService";
@@ -26,9 +25,9 @@ function Header() {
   const handleLogout = async () => {
     try {
       await AuthService.logoutApi();
+      localStorage.removeItem("token");
       dispatch(doLogoutAction());
       navigate("/login");
-      localStorage.removeItem("token");
     } catch (error) {
       console.error("Error logging out:", error);
     }

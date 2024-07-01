@@ -6,16 +6,14 @@ import { Dropdown, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import AuthService from "../../../Services/AuthService";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+
 const cx = classNames.bind(styles);
 
 import {
   DashboardOutlined,
   UserOutlined,
   ProjectOutlined,
-  TrophyOutlined,
   LogoutOutlined,
-  GroupOutlined,
 } from "@ant-design/icons"; //icon dashboards side menu
 import { Layout, Menu, theme } from "antd";
 import { doLogoutAction } from "../../../Redux/Reducer/userSlice";
@@ -92,9 +90,9 @@ const layoutUser = () => {
   const handleLogout = async () => {
     try {
       await AuthService.logoutApi();
+      localStorage.removeItem("token");
       dispatch(doLogoutAction());
       navigate("/login");
-      localStorage.removeItem("token");
     } catch (error) {
       console.error("Error logging out:", error);
     }
