@@ -7,6 +7,7 @@ const initialState = {
         id: "",
         email: "",
         username: "",
+        position: "",
         avatar: "",
     },
 };
@@ -30,7 +31,6 @@ export const userSlice = createSlice({
                 username: "",
                 position: "",
                 avatar: "",
-
             };
         },
     },

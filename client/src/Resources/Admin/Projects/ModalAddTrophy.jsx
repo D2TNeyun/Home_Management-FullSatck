@@ -47,7 +47,7 @@ const ModalAddTrophy = (props) => {
         className={cx("modalView-User")}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Remuneration</Modal.Title>
+          <Modal.Title>Confirm Laudatory</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Are you sure you want to add rewards this project,
@@ -63,7 +63,7 @@ const ModalAddTrophy = (props) => {
               onChange={(event) => setAward(event.target.value)}
               value={nameAward}
             >
-              <option>Selected a remuneration</option>
+              <option>Selected a Laudatory</option>
               <option value="Hoan Thanh">Hoan Thanh</option>
               <option value="Hoan Thanh Tot">Hoan Thanh Tot</option>
               <option value="Hoan Thanh Xuat Sac">Hoan Thanh Xuat Sac</option>

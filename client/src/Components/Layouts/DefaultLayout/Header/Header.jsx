@@ -24,11 +24,13 @@ function Header() {
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   const handleLogout = async () => {
-    const res = await AuthService.logoutApi();
-    if (res.status === 200) {
+    try {
+      await AuthService.logoutApi();
       dispatch(doLogoutAction());
-      localStorage.removeItem('token');
-      navigate("/");
+      navigate("/login");
+      localStorage.removeItem("token");
+    } catch (error) {
+      console.error("Error logging out:", error);
     }
   };
   

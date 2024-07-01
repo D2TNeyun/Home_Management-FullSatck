@@ -15,7 +15,7 @@ import {
   ProjectOutlined,
   TrophyOutlined,
   LogoutOutlined,
-  GroupOutlined
+  GroupOutlined,
 } from "@ant-design/icons"; //icon dashboards side menu
 import { Layout, Menu, theme } from "antd";
 import { doLogoutAction } from "../../../Redux/Reducer/userSlice";
@@ -69,7 +69,7 @@ const itemsSlider = [
   getItem("User", "Sub1", <UserOutlined />, [
     getItem(
       <Link to="/user/proFile" className="text-decoration-none">
-       myProFile
+        myProFile
       </Link>,
       "2"
     ),
@@ -91,13 +91,13 @@ const layoutUser = () => {
   const user = useSelector((state) => state.user.user);
   const handleLogout = async () => {
     try {
-      await AuthService.logoutApi();   
+      await AuthService.logoutApi();
       dispatch(doLogoutAction());
-      navigate('/login'); 
-      localStorage.removeItem('token');
-  } catch (error) {
-      console.error('Error logging out:', error);
-  }
+      navigate("/login");
+      localStorage.removeItem("token");
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
   const items = [
@@ -154,7 +154,6 @@ const layoutUser = () => {
           <Content style={{ backgroundColor: "#F0F3F" }}>
             <div>
               <Outlet />
-             
             </div>
           </Content>
         </Layout>

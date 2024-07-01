@@ -30,7 +30,6 @@ const TableMyProject = (props) => {
             <th scope="col">ID</th>
             <th scope="col">Username</th>
             <th scope="col">Name Projrct</th>
-            <th scope="col">Year</th>
             <th scope="col">Laudatory</th>
             <th scope="col">Action</th>
           </tr>
@@ -42,7 +41,6 @@ const TableMyProject = (props) => {
                 <td>{item.id}</td>
                 <td>{item.User?.username}</td>
                 <td>{item.nameDtnk}</td>
-                <td>{item.year}</td>
                 <td>{item.Awards?.nameAward}</td>
                 <td className={cx("btn-action")}>
                   <button
